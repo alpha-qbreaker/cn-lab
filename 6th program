@@ -1,0 +1,38 @@
+#include<stdio.h> 
+#include<string.h> 
+char data[30], gen[10], check[30]; 
+int i, j, len; 
+#define N strlen(gen) 
+void xor_op() 
+{ 
+    for(j=1;j<N;j++) 
+        check[j]=(check[j]==gen[j])?'0':'1'; 
+} 
+void crc() 
+{ 
+    for(i=0;i<N;i++) 
+        check[i]=data[i]; 
+    do{ 
+        if(check[0]=='1') 
+            xor_op(); 
+        for(j=0;j<N-1;j++) 
+            check[j]=check[j+1]; 
+        check[j]=data[i++]; 
+    }while(i<=len+N-1); 
+} 
+int main() 
+{ 
+    printf("Enter data: "); 
+    scanf("%s",data); 
+    printf("Enter generator: "); 
+    scanf("%s",gen); 
+    len=strlen(data); 
+    for(i=len;i<len+N-1;i++) 
+        data[i]='0'; 
+    crc(); 
+    printf("CRC value: %s\n",check); 
+    for(i=len;i<len+N-1;i++) 
+        data[i]=check[i-len]; 
+    printf("Final data: %s\n",data); 
+    return 0; 
+}
