@@ -1,0 +1,44 @@
+#include<stdio.h> 
+#include<conio.h> 
+ 
+void main() 
+{ 
+    int n,i,j,k; 
+    int a[10][10]; 
+ 
+    clrscr(); 
+ 
+    printf("Enter number of nodes: "); 
+    scanf("%d",&n); 
+ 
+    printf("\nEnter cost matrix:\n"); 
+    for(i=0;i<n;i++) 
+    { 
+        for(j=0;j<n;j++) 
+        { 
+            printf("Cost %d -> %d: ",i,j); 
+            scanf("%d",&a[i][j]); 
+ 
+            /* IMPORTANT FIX */ 
+            if(i == j) 
+                a[i][j] = 0; 
+        } 
+    } 
+ 
+    /* Floyd-Warshall logic */ 
+    for(k=0;k<n;k++) 
+        for(i=0;i<n;i++) 
+            for(j=0;j<n;j++) 
+                if(a[i][j] > a[i][k] + a[k][j]) 
+                    a[i][j] = a[i][k] + a[k][j]; 
+ 
+    printf("\nOutput matrix:\n"); 
+    for(i=0;i<n;i++) 
+    { 
+        for(j=0;j<n;j++) 
+            printf("%d ",a[i][j]); 
+        printf("\n"); 
+    } 
+ 
+    getch(); 
+} 
